@@ -1,55 +1,83 @@
--- ESO HUB V1000 - Mobile Optimized
-local library = {
-    color = Color3.fromRGB(0, 255, 0), -- Yeşil Hacker Teması
-    version = "V1000"
-}
+-- ESO HUB INFINITY - TÜM ÖZELLİKLERİ İÇERİR
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local root = character:WaitForChild("HumanoidRootPart")
+local RS = game:GetService("RunService")
+local UIS = game:GetService("UserInputService")
 
 local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
 local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Size = UDim2.new(0, 200, 0, 250)
-MainFrame.Position = UDim2.new(0.5, -100, 0.5, -125)
-MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+MainFrame.Size = UDim2.new(0, 350, 0, 200)
+MainFrame.Position = UDim2.new(0.5, -175, 0.5, -100)
+MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 MainFrame.Active = true
 MainFrame.Draggable = true
+Instance.new("UICorner", MainFrame)
 
--- Başlık
-local Title = Instance.new("TextLabel", MainFrame)
-Title.Text = "ESO HUB " .. library.version
-Title.TextColor3 = library.color
-Title.Size = UDim2.new(1, 0, 0, 30)
+local MasterBtn = Instance.new("TextButton", MainFrame)
+MasterBtn.Size = UDim2.new(0.9, 0, 0, 150)
+MasterBtn.Position = UDim2.new(0.05, 0, 0.15, 0)
+MasterBtn.Text = "🔥 INFINITY MODU AKTİF ET (FULL ÖZELLİK) 🔥"
+MasterBtn.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+MasterBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+MasterBtn.Font = Enum.Font.GothamBold
+MasterBtn.Parent = MainFrame
+Instance.new("UICorner", MasterBtn)
 
--- 3 Adet Giriş Kutucuğu (Hız, Zıplama, Uçuş)
-local SpeedBox = Instance.new("TextBox", MainFrame)
-SpeedBox.PlaceholderText = "Hız (Örn: 50)"
-SpeedBox.Position = UDim2.new(0.1, 0, 0.2, 0)
-SpeedBox.Size = UDim2.new(0.8, 0, 0, 30)
-
-local JumpBox = Instance.new("TextBox", MainFrame)
-JumpBox.PlaceholderText = "Zıplama (Örn: 100)"
-JumpBox.Position = UDim2.new(0.1, 0, 0.4, 0)
-JumpBox.Size = UDim2.new(0.8, 0, 0, 30)
-
-local FlyBox = Instance.new("TextBox", MainFrame)
-FlyBox.PlaceholderText = "Uçuş Hızı"
-FlyBox.Position = UDim2.new(0.1, 0, 0.6, 0)
-FlyBox.Size = UDim2.new(0.8, 0, 0, 30)
-
--- Özellikleri Aktif Etme Butonu
-local ExecuteBtn = Instance.new("TextButton", MainFrame)
-ExecuteBtn.Text = "AKTİF ET"
-ExecuteBtn.Position = UDim2.new(0.1, 0, 0.8, 0)
-ExecuteBtn.Size = UDim2.new(0.8, 0, 0, 40)
-ExecuteBtn.BackgroundColor3 = library.color
-
--- Kod Mantığı
-ExecuteBtn.MouseButton1Click:Connect(function()
-    local hum = game.Players.LocalPlayer.Character.Humanoid
-    hum.WalkSpeed = tonumber(SpeedBox.Text) or 16
-    hum.JumpPower = tonumber(JumpBox.Text) or 50
-    -- Noclip Mantığı
-    game:GetService("RunService").Stepped:Connect(function()
-        for _, part in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+MasterBtn.MouseButton1Click:Connect(function()
+    MasterBtn.Text = "⚡ INFINITY MODU ÇALIŞIYOR ⚡"
+    MasterBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+    
+    RS.RenderStepped:Connect(function()
+        -- 1. HIZ & ZIPLAMA 🚀⏫
+        humanoid.WalkSpeed = 150
+        humanoid.JumpPower = 200
+        
+        -- 2. UÇUŞ (FLY) ✈️
+        if not root:FindFirstChild("FlyBV") then
+            local bv = Instance.new("BodyVelocity", root)
+            bv.Name = "FlyBV"
+            bv.MaxForce = Vector3.new(0, 100000, 0)
+            bv.Velocity = Vector3.new(0, 0, 0)
+        end
+        
+        -- 3. NOCLIP (DUVARLARDAN GEÇME) 🧱
+        for _, part in pairs(character:GetDescendants()) do
             if part:IsA("BasePart") then part.CanCollide = false end
         end
+        
+        -- 4. GÖRÜNMEZLİK & ANTI-AIM 👻🛡️
+        for _, p in pairs(character:GetDescendants()) do if p:IsA("BasePart") then p.Transparency = 1 end end
+        humanoid.AutoRotate = false 
+        
+        -- 5. ESP 👁️
+        for _, p in pairs(game.Players:GetPlayers()) do
+            if p ~= player and p.Character and not p.Character:FindFirstChild("ESP") then
+                local hl = Instance.new("Highlight", p.Character) hl.Name = "ESP"
+            end
+        end
+        
+        -- 6. SINIRSIZ MERMİ & GOD MODE ❤️🔫
+        for _, t in pairs(player.Backpack:GetChildren()) do if t:FindFirstChild("Ammo") then t.Ammo.Value = 999 end end
+        humanoid.Health = humanoid.MaxHealth
+        
+        -- 7. OTOMATİK TOPLAMA 💰
+        for _, obj in pairs(workspace:GetChildren()) do
+            if obj:IsA("Tool") and obj:FindFirstChild("Handle") then obj.Handle.CFrame = root.CFrame end
+        end
+        
+        -- 8. INF JUMP (HAVADA SINIRSIZ ZIPLAMA) ⏫⏫
+        humanoid.Jumping:Connect(function() humanoid.JumpPower = 200 end)
+        
+        -- 9. AIMBOT (OTOMATİK TAKİP) 🎯
+        local closest = nil local dist = math.huge
+        for _, p in pairs(game.Players:GetPlayers()) do
+            if p ~= player and p.Character and p.Character:FindFirstChild("Head") then
+                local d = (root.Position - p.Character.HumanoidRootPart.Position).Magnitude
+                if d < dist then closest = p.Character.Head dist = d end
+            end
+        end
+        if closest then workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.Position, closest.Position) end
     end)
 end)
