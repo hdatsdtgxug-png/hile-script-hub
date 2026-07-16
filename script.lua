@@ -1,4 +1,4 @@
--- ESO HUB OMEGA - TAM KADRO FINAL BYPASS (GÜNCEL)
+-- ESO HUB OMEGA - DENGELENMİŞ ZIPLAMA (HASARSIZ)
 local player = game.Players.LocalPlayer
 local RS = game:GetService("RunService")
 local ScreenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
@@ -52,12 +52,12 @@ end
 -- ÖZELLİKLER
 createToggle("🚀 HIZ (FORCE)", function() return RS.Heartbeat:Connect(function() if player.Character and player.Character:FindFirstChild("Humanoid") then player.Character.Humanoid.WalkSpeed = 150 end end) end, function() player.Character.Humanoid.WalkSpeed = 16 end)
 
--- GÜÇLENDİRİLMİŞ ZIPLAMA
+-- DENGELENMİŞ ZIPLAMA (80 YAPILDI)
 createToggle("⏫ ZIPLAMA (FORCE)", function() 
     return RS.Heartbeat:Connect(function() 
         if player.Character and player.Character:FindFirstChild("Humanoid") then 
             player.Character.Humanoid.UseJumpPower = true 
-            player.Character.Humanoid.JumpPower = 200 
+            player.Character.Humanoid.JumpPower = 80 
         end 
     end) 
 end, function() 
@@ -66,7 +66,7 @@ end, function()
     end 
 end)
 
--- GÜNCEL GOD MODE
+-- GOD MODE (REGEN)
 createToggle("❤️ GOD MODE (REGEN)", function() 
     return RS.Heartbeat:Connect(function() 
         if player.Character and player.Character:FindFirstChild("Humanoid") then 
