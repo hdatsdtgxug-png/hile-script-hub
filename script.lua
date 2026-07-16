@@ -1,4 +1,4 @@
--- ESO HUB OMEGA - TAM KADRO FULL PAKET
+-- ESO HUB OMEGA - TAM KADRO FINAL BYPASS (GÜNCEL)
 local player = game.Players.LocalPlayer
 local RS = game:GetService("RunService")
 local ScreenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
@@ -49,10 +49,32 @@ local function createToggle(text, enableFunc, disableFunc)
     Instance.new("UICorner", btn)
 end
 
--- TÜM ÖZELLİKLER TAM KADRO
-createToggle("🚀 HIZ (FORCE)", function() return RS.Heartbeat:Connect(function() if player.Character then player.Character.Humanoid.WalkSpeed = 150 end end) end, function() player.Character.Humanoid.WalkSpeed = 16 end)
-createToggle("⏫ ZIPLAMA (FORCE)", function() return RS.Heartbeat:Connect(function() if player.Character then player.Character.Humanoid.JumpPower = 200 end end) end, function() player.Character.Humanoid.JumpPower = 50 end)
-createToggle("❤️ GOD MODE", function() return player.Character.Humanoid.HealthChanged:Connect(function() player.Character.Humanoid.Health = 100 end) end, function() end)
+-- ÖZELLİKLER
+createToggle("🚀 HIZ (FORCE)", function() return RS.Heartbeat:Connect(function() if player.Character and player.Character:FindFirstChild("Humanoid") then player.Character.Humanoid.WalkSpeed = 150 end end) end, function() player.Character.Humanoid.WalkSpeed = 16 end)
+
+-- GÜÇLENDİRİLMİŞ ZIPLAMA
+createToggle("⏫ ZIPLAMA (FORCE)", function() 
+    return RS.Heartbeat:Connect(function() 
+        if player.Character and player.Character:FindFirstChild("Humanoid") then 
+            player.Character.Humanoid.UseJumpPower = true 
+            player.Character.Humanoid.JumpPower = 200 
+        end 
+    end) 
+end, function() 
+    if player.Character and player.Character:FindFirstChild("Humanoid") then 
+        player.Character.Humanoid.JumpPower = 50 
+    end 
+end)
+
+-- GÜNCEL GOD MODE
+createToggle("❤️ GOD MODE (REGEN)", function() 
+    return RS.Heartbeat:Connect(function() 
+        if player.Character and player.Character:FindFirstChild("Humanoid") then 
+            player.Character.Humanoid.Health = 100 
+        end 
+    end) 
+end, function() end)
+
 createToggle("🔫 SINIRSIZ MERMİ", function() return RS.Heartbeat:Connect(function() for _,t in pairs(player.Backpack:GetChildren()) do if t:FindFirstChild("Ammo") then t.Ammo.Value = 999 end end end) end, function() end)
 createToggle("🧱 NOCLIP", function() return RS.Heartbeat:Connect(function() for _,p in pairs(player.Character:GetDescendants()) do if p:IsA("BasePart") then p.CanCollide = false end end end) end, function() for _,p in pairs(player.Character:GetDescendants()) do if p:IsA("BasePart") then p.CanCollide = true end end end)
 createToggle("🎯 AIMBOT", function() return RS.Heartbeat:Connect(function() local c = nil local d = math.huge for _,p in pairs(game.Players:GetPlayers()) do if p ~= player and p.Character and p.Character:FindFirstChild("Head") then local dist = (player.Character.HumanoidRootPart.Position - p.Character.Head.Position).Magnitude if dist < d then c = p.Character.Head d = dist end end end if c then workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.Position, c.Position) end end) end, function() end)
