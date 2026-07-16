@@ -1,4 +1,4 @@
--- ESO HUB OMEGA - DENGELENMİŞ ZIPLAMA (HASARSIZ)
+-- ESO HUB OMEGA - FİNAL SÜRÜM (SAĞLIK BARLI GOD MODE)
 local player = game.Players.LocalPlayer
 local RS = game:GetService("RunService")
 local ScreenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
@@ -66,13 +66,13 @@ end, function()
     end 
 end)
 
--- GOD MODE (REGEN)
+-- GÜNCEL GOD MODE (SAĞLIK BARINI GİZLEMEZ)
 createToggle("❤️ GOD MODE (REGEN)", function() 
-    return RS.Heartbeat:Connect(function() 
-        if player.Character and player.Character:FindFirstChild("Humanoid") then 
-            player.Character.Humanoid.Health = 100 
-        end 
-    end) 
+    return player.Character.Humanoid.HealthChanged:Connect(function(health)
+        if health < 100 then
+            player.Character.Humanoid.Health = 100
+        end
+    end)
 end, function() end)
 
 createToggle("🔫 SINIRSIZ MERMİ", function() return RS.Heartbeat:Connect(function() for _,t in pairs(player.Backpack:GetChildren()) do if t:FindFirstChild("Ammo") then t.Ammo.Value = 999 end end end) end, function() end)
