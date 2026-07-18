@@ -1,87 +1,46 @@
 local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall"))()
 local Win = Lib:CreateWindow("KAOS & SAVAŞ PANELİ")
 
--- 1. SEKME: SAVAŞ ALANI
+-- 1. SAVAŞ ALANI
 local Savas = Win:CreateFolder("⚔️ SAVAŞ ALANI")
-Savas:AddToggle("🚀 HIZ (Speed)", function(val)
-    getgenv().Speed = val
-    while getgenv().Speed do
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
-        wait()
-    end
-end)
-Savas:AddToggle("⚡ ZIPLAMA (Jump)", function(val)
-    getgenv().Jump = val
-    while getgenv().Jump do
-        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
-        wait()
-    end
-end)
-Savas:AddToggle("🛸 UÇMA (Fly)", function(val)
-    getgenv().Fly = val
-    local hum = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
-    while getgenv().Fly do
-        hum.PlatformStand = true
-        wait()
-    end
-    hum.PlatformStand = false
-end)
-Savas:AddToggle("🧱 DUVAR GEÇME (NoClip)", function(val)
-    getgenv().NoClip = val
-    while getgenv().NoClip do
-        for _, part in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-            if part:IsA("BasePart") then part.CanCollide = false end
-        end
-        wait()
-    end
-end)
+Savas:AddToggle("🚀 HIZ (Speed)", function(val) getgenv().Speed = val while getgenv().Speed do game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100 wait() end end)
+Savas:AddToggle("⚡ ZIPLAMA (Jump)", function(val) getgenv().Jump = val while getgenv().Jump do game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100 wait() end end)
+Savas:AddToggle("🛸 UÇMA (Fly)", function(val) getgenv().Fly = val local hum = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") while getgenv().Fly do hum.PlatformStand = true wait() end hum.PlatformStand = false end)
+Savas:AddToggle("🧱 DUVAR GEÇME (NoClip)", function(val) getgenv().NoClip = val while getgenv().NoClip do for _, part in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do if part:IsA("BasePart") then part.CanCollide = false end end wait() end end)
 
--- 2. SEKME: TROLL (Bozucular)
+-- 2. TROLL BÖLÜMÜ
 local Troll = Win:CreateFolder("🌪️ TROLL BÖLÜMÜ")
-Troll:AddToggle("😵 EKRAN BOZUCU (Fling)", function(val)
-    getgenv().Fling = val
-    while getgenv().Fling do
-        local p = game.Players.LocalPlayer
-        if p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
-            p.Character.HumanoidRootPart.Velocity = Vector3.new(9999, 9999, 9999)
-        end
-        wait()
-    end
-end)
-Troll:AddToggle("👣 YÜRÜYÜŞ BOZUCU (SERT)", function(val)
-    getgenv().WalkBreak = val
-    while getgenv().WalkBreak do
-        local char = game.Players.LocalPlayer.Character
-        if char and char:FindFirstChild("HumanoidRootPart") then
-            char.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0.2)
-        end
-        wait(0.05)
-    end
-end)
-Troll:AddToggle("🛑 YÜRÜYÜŞ KİLİTLEYİCİ", function(val)
-    getgenv().Freeze = val
-    while getgenv().Freeze do
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0
-        wait(0.5)
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
-        wait(0.1)
-    end
-end)
+Troll:AddToggle("😵 EKRAN BOZUCU (Fling)", function(val) getgenv().Fling = val while getgenv().Fling do local p = game.Players.LocalPlayer if p.Character and p.Character:FindFirstChild("HumanoidRootPart") then p.Character.HumanoidRootPart.Velocity = Vector3.new(9999, 9999, 9999) end wait() end end)
+Troll:AddToggle("👣 YÜRÜYÜŞ BOZUCU (SERT)", function(val) getgenv().WalkBreak = val while getgenv().WalkBreak do local char = game.Players.LocalPlayer.Character if char and char:FindFirstChild("HumanoidRootPart") then char.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame * CFrame.new(0, 0, 0.2) end wait(0.05) end end)
+Troll:AddToggle("🛑 YÜRÜYÜŞ KİLİTLEYİCİ", function(val) getgenv().Freeze = val while getgenv().Freeze do game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 0 wait(0.5) game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100 wait(0.1) end end)
 
--- 3. SEKME: EŞYALAR
+-- 3. EŞYALAR
 local Esya = Win:CreateFolder("📦 TROLL EŞYALARI")
-Esya:AddButton("🔫 REMINGTON 870", function()
-    local item = game.Workspace.Prison_ITEMS.giver["Remington 870"]:Clone()
-    item.Parent = game.Players.LocalPlayer.Backpack
-end)
-Esya:AddButton("🗝️ POLİS KARTI", function()
-    local item = game.Workspace.Prison_ITEMS.giver["Key"]:Clone()
-    item.Parent = game.Players.LocalPlayer.Backpack
+Esya:AddButton("🔫 REMINGTON 870", function() game.Workspace.Prison_ITEMS.giver["Remington 870"]:Clone().Parent = game.Players.LocalPlayer.Backpack end)
+Esya:AddButton("🗝️ POLİS KARTI", function() game.Workspace.Prison_ITEMS.giver["Key"]:Clone().Parent = game.Players.LocalPlayer.Backpack end)
+
+-- KOMUT SİSTEMİ (Her zaman aktif)
+game.Players.LocalPlayer.Chatted:Connect(function(msg)
+    if msg:lower() == "/panel" then Win:Toggle() end
 end)
 
--- PANEL KOMUT SİSTEMİ
-game.Players.LocalPlayer.Chatted:Connect(function(msg)
-    if msg:lower() == "/panel" then
-        Win:Toggle()
-    end
-end)
+-- PANEL KONTROL KUTUSU
+local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
+local MainFrame = Instance.new("Frame", ScreenGui)
+MainFrame.Size = UDim2.new(0, 120, 0, 40)
+MainFrame.Position = UDim2.new(0.1, 0, 0.1, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+MainFrame.Draggable = true 
+
+local ToggleBtn = Instance.new("TextButton", MainFrame)
+ToggleBtn.Size = UDim2.new(0.8, 0, 1, 0)
+ToggleBtn.Text = "AÇ / KAPA"
+ToggleBtn.MouseButton1Click:Connect(function() Win:Toggle() end)
+
+-- SADECE BUTONU SİLEN ÇARPI (X)
+local CloseBtn = Instance.new("TextButton", MainFrame)
+CloseBtn.Size = UDim2.new(0.2, 0, 1, 0)
+CloseBtn.Position = UDim2.new(0.8, 0, 0, 0)
+CloseBtn.Text = "X"
+CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+CloseBtn.MouseButton1Click:Connect(function() ScreenGui:Destroy() end)
