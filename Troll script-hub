@@ -78,3 +78,10 @@ Esya:AddButton("🗝️ POLİS KARTI", function()
     local item = game.Workspace.Prison_ITEMS.giver["Key"]:Clone()
     item.Parent = game.Players.LocalPlayer.Backpack
 end)
+
+-- PANEL KOMUT SİSTEMİ
+game.Players.LocalPlayer.Chatted:Connect(function(msg)
+    if msg:lower() == "/panel" then
+        Win:Toggle()
+    end
+end)
